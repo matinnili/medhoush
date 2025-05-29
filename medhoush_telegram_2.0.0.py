@@ -32,11 +32,12 @@ logging.basicConfig(
 # کانفیگ API و متغیرها
 # ----------------------------
 TELEGRAM_TOKEN = "7692983844:AAHHxnBpzLS-lwY30BM_P0lH73wsF-fL1WI"
-LLM_API_KEY = "app-Ry2QpwW6D11lhTZZy37RtEoh"
-BASE_URL = "http://65.109.213.30"
+LLM_API_KEY = "app-AL4fTkUVtLptvaTgC1v6qrZl"
+BASE_URL = "http://185.216.22.90"
 CHAT_URL = f"{BASE_URL}/v1/chat-messages"
 UPLOAD_URL = f"{BASE_URL}/v1/files/upload"
 AUDIO_TO_TEXT_URL = f"{BASE_URL}/v1/audio-to-text"
+
 
 # لینک‌های پرداخت
 PAY_LINK_50 = "https://zarinp.al/708600"
