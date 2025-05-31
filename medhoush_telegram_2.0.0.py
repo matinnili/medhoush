@@ -31,7 +31,7 @@ logging.basicConfig(
 # ----------------------------
 # کانفیگ API و متغیرها
 # ----------------------------
-TELEGRAM_TOKEN = "7692983844:AAHHxnBpzLS-lwY30BM_P0lH73wsF-fL1WI"
+TELEGRAM_TOKEN = "8177855938:AAHCnj7tgkpsHdOoZH1hBJKujIjABxh8eRw"
 LLM_API_KEY = "app-AL4fTkUVtLptvaTgC1v6qrZl"
 BASE_URL = "http://185.216.22.90"
 CHAT_URL = f"{BASE_URL}/v1/chat-messages"
