@@ -1,0 +1,10 @@
+services:
+  backend:
+    
+    image : medhoush_test:latest
+
+    volumes:
+     - .:/app/
+
+volumes:
+  .:
