@@ -51,10 +51,10 @@ FREE_MESSAGES_PER_WEEK = 7
 CHANNEL_USERNAME = "@medhoush_ir"
 
 # آیدی‌های ادمین
-ADMIN_IDS = [6234375011]
+ADMIN_IDS = [6234375011,"@matinnili"]
 
 # آیدی‌های پزشکان
-DOCTOR_IDS = [6234375011]  # لیست آی‌دی‌های عددی پزشکان
+DOCTOR_IDS = [6234375011,"@matinnili"]  # لیست آی‌دی‌های عددی پزشکان
 
 # مسیر فایل داده‌های پرداخت
 PAYMENT_FILE = "payment_requests.json"
