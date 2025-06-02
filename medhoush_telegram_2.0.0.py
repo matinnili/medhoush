@@ -289,7 +289,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_user_member_of_channel(user_id, context):
         await update.message.reply_text(
             "⚠️ لطفا ابتدا در کانال ما عضو شوید تا بتوانید از ربات استفاده کنید:\n"
-            "https://t.me/medhoush\n\n"
+            "https://t.me/medhoush_ir\n\n"
             "سپس /start را ارسال کنید.",
             reply_markup=MAIN_KEYBOARD
         )
@@ -321,7 +321,7 @@ async def about_us(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "درک بیماری‌ها، داروها، رژیم غذایی و تحلیل نتایج آزمایش‌ها کمک می‌کند.\n\n"
         "🔒 امنیت و محرمانگی اطلاعات شما برای ما بسیار مهم است.\n"
         "📡 برای استفاده کامل، لطفاً در کانال رسمی ما عضو شوید:\n"
-        "https://t.me/medhoush"
+        "https://t.me/medhoush_ir"
     )
     await update.message.reply_text(text, reply_markup=MAIN_KEYBOARD)
 
@@ -733,7 +733,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not await is_user_member_of_channel(user_id, context):
         await update.message.reply_text(
             "⚠️ لطفا ابتدا در کانال ما عضو شوید:\n"
-            "https://t.me/medhoush",
+            "https://t.me/medhoush_ir",
             reply_markup=MAIN_KEYBOARD
         )
         return
@@ -855,7 +855,7 @@ async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # اگر مکالمه با پزشک فعال نباشد، پردازش تصویر با مدل
     if not await is_user_member_of_channel(user_id, context):
         await update.message.reply_text(
-            "⚠️ لطفا ابتدا در کانال ما عضو شوید:\nhttps://t.me/medhoush",
+            "⚠️ لطفا ابتدا در کانال ما عضو شوید:\nhttps://t.me/medhoush_ir",
             reply_markup=MAIN_KEYBOARD
         )
         return
@@ -898,7 +898,7 @@ async def handle_audio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # اگر مکالمه با پزشک فعال نباشد، پردازش صوت با مدل
     if not await is_user_member_of_channel(user_id, context):
         await update.message.reply_text(
-            "⚠️ لطفا ابتدا در کانال ما عضو شوید:\nhttps://t.me/medhoush",
+            "⚠️ لطفا ابتدا در کانال ما عضو شوید:\nhttps://t.me/medhoush_ir",
             reply_markup=MAIN_KEYBOARD
         )
         return
@@ -932,7 +932,7 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
     if not await is_user_member_of_channel(user_id, context):
         await update.message.reply_text(
-            "⚠️ لطفا ابتدا در کانال ما عضو شوید:\nhttps://t.me/medhoush",
+            "⚠️ لطفا ابتدا در کانال ما عضو شوید:\nhttps://t.me/medhoush_ir",
             reply_markup=MAIN_KEYBOARD
         )
         return
