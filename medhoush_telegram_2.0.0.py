@@ -51,10 +51,10 @@ FREE_MESSAGES_PER_WEEK = 7
 CHANNEL_USERNAME = "@medhoush_ir"
 
 # آیدی‌های ادمین
-ADMIN_IDS = [6234375011,"@matinnili"]
+ADMIN_IDS = [6234375011,105795770]
 
 # آیدی‌های پزشکان
-DOCTOR_IDS = [6234375011,"@matinnili"]  # لیست آی‌دی‌های عددی پزشکان
+DOCTOR_IDS = [6234375011,105795770]  # لیست آی‌دی‌های عددی پزشکان
 
 # مسیر فایل داده‌های پرداخت
 PAYMENT_FILE = "payment_requests.json"
@@ -286,6 +286,7 @@ def update_payment_status(request_id, status, admin_id, file_path: str):
 # ----------------------------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_id = update.message.from_user.id
+    logging.info(f"User {user_id} started the bot hello.")
     if not await is_user_member_of_channel(user_id, context):
         await update.message.reply_text(
             "⚠️ لطفا ابتدا در کانال ما عضو شوید تا بتوانید از ربات استفاده کنید:\n"
