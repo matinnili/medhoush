@@ -4,8 +4,8 @@ FROM python:3.10
 WORKDIR /app
 
 COPY requirements.txt requirements.txt
-RUN apt-get update && apt-get install git -y
+COPY medhoush_telegram_2.0.0_admin.py medhoush_telegram_2.0.0_admin.py
 RUN pip3 install --no-cache-dir -r requirements.txt
-COPY . /app/
+COPY . .
 
-CMD python3  ./medhoush_telegram_2.0.0.py
+CMD python3  medhoush_telegram_2.0.0_admin.py

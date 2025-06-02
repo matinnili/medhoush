@@ -1,10 +1,17 @@
 services:
   backend:
     
-    build : .
+    build : ./dockerfile
 
     volumes:
      - .:/app/
+  backend_admin:
+    build : ./dockerfile_admin
+    volumes:
+     - .:/app/
+
+
+
 
 volumes:
   .:
