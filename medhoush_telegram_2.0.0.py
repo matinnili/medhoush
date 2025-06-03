@@ -1118,6 +1118,7 @@ async def receive_patient_message(update: Update, context: ContextTypes.DEFAULT_
     if user_id in DOCTOR_IDS:
         await receive_doctor_message(update , context)
     doctor_id = ACTIVE_CONVERSATIONS[user_id]
+    logging.info(f"User {user_id} is sending a message to doctor {doctor_id}")
     user_message = update.message.text
     user_name = update.message.from_user.username or "بدون نام‌کاربری"
 
