@@ -743,6 +743,9 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if ACTIVE_CONVERSATIONS.get(user_id):
         await receive_patient_message(update, context)
         return
+    if user_id in DOCTOR_IDS:
+        await receive_doctor_message(update,context)
+        return
 
     if not await check_credit(update, context):
         return
@@ -815,6 +818,31 @@ async def receive_patient_photo(update: Update, context: ContextTypes.DEFAULT_TY
         logging.error(f"Error sending photo to doctor {doctor_id}: {e}")
     finally:
         os.remove(photo_path)
+async def receive_doctor_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """دریافت عکس و ارسال به پزشک اگر چت فعال است."""
+    doctor_id = update.message.from_user.id
+
+    for id in ACTIVE_CONVERSATIONS.keys():
+     if ACTIVE_CONVERSATIONS[id]== doctor_id:
+      user_id=id
+
+    await update.message.chat.send_action(action="upload_photo")
+    photo = await update.message.photo[-1].get_file()
+    photo_path = f"photo_{doctor_id}.jpg"
+    await photo.download_to_drive(photo_path)
+
+    try:
+        with open(photo_path, 'rb') as photo_file:
+            await context.bot.send_photo(
+                chat_id=user_id,
+                photo=photo_file,
+                caption=f"عکس جدید از پزشک"
+            )
+        await update.message.reply_text("عکس شما به بیمار ارسال شد.", reply_markup=VISIT_KEYBOARD)
+    except Exception as e:
+        logging.error(f"Error sending photo to doctor {user_id}: {e}")
+    finally:
+        os.remove(photo_path)
 
 async def receive_patient_audio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """دریافت صوت و ارسال به پزشک اگر چت فعال است."""
@@ -842,16 +870,73 @@ async def receive_patient_audio(update: Update, context: ContextTypes.DEFAULT_TY
         logging.error(f"Error sending audio to doctor {doctor_id}: {e}")
     finally:
         os.remove(audio_path)
+async def receive_patient_audio(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """دریافت صوت و ارسال به پزشک اگر چت فعال است."""
+    user_id = update.message.from_user.id
+    if user_id not in ACTIVE_CONVERSATIONS:
+        await update.message.reply_text("لطفاً ابتدا درخواست ویزیت را ثبت و تایید کنید.")
+        return
 
+    doctor_id = ACTIVE_CONVERSATIONS[user_id]
+
+    await update.message.chat.send_action(action="upload_audio")
+    voice = await update.message.voice.get_file()
+    audio_path = f"audio_{user_id}.ogg"
+    await voice.download_to_drive(audio_path)
+
+    try:
+        with open(audio_path, 'rb') as audio_file:
+            await context.bot.send_voice(
+                chat_id=doctor_id,
+                voice=audio_file,
+                caption=f"پیام صوتی جدید از کاربر {user_id}"
+            )
+        await update.message.reply_text("پیام صوتی شما به پزشک ارسال شد.", reply_markup=VISIT_KEYBOARD)
+    except Exception as e:
+        logging.error(f"Error sending audio to doctor {doctor_id}: {e}")
+    finally:
+        os.remove(audio_path)
+async def receive_doctor_audio(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """دریافت صوت و ارسال به پزشک اگر چت فعال است."""
+    doctor_id = update.message.from_user.id
+
+    for id in ACTIVE_CONVERSATIONS.keys():
+     if ACTIVE_CONVERSATIONS[id]== doctor_id:
+      user_id=id
+    
+
+    await update.message.chat.send_action(action="upload_audio")
+    voice = await update.message.voice.get_file()
+    audio_path = f"audio_{doctor_id}.ogg"
+    await voice.download_to_drive(audio_path)
+
+    try:
+        with open(audio_path, 'rb') as audio_file:
+            await context.bot.send_voice(
+                chat_id=id,
+                voice=audio_file,
+                caption=f"پیام صوتی جدید از پزشک "
+            )
+        await update.message.reply_text("پیام صوتی شما به بیمار ارسال شد.", reply_markup=VISIT_KEYBOARD)
+    except Exception as e:
+        logging.error(f"Error sending audio to doctor {user_id}: {e}")
+    finally:
+        os.remove(audio_path)
 
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """دریافت عکس و ارسال به مقصد درست"""
     user_id = update.message.from_user.id
 
+
+    
     # بررسی مکالمه با پزشک
     if user_id in ACTIVE_CONVERSATIONS:
         await receive_patient_photo(update, context)
         return
+    if user_id in DOCTOR_IDS:
+        await receive_doctor_photo(update, context)
+        return
+
 
     # اگر مکالمه با پزشک فعال نباشد، پردازش تصویر با مدل
     if not await is_user_member_of_channel(user_id, context):
@@ -894,6 +979,9 @@ async def handle_audio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # بررسی مکالمه با پزشک
     if user_id in ACTIVE_CONVERSATIONS:
         await receive_patient_audio(update, context)
+        return
+    if user_id in DOCTOR_IDS:
+        await receive_doctor_audio(update,context)
         return
 
     # اگر مکالمه با پزشک فعال نباشد، پردازش صوت با مدل
@@ -1135,6 +1223,8 @@ async def receive_patient_message(update: Update, context: ContextTypes.DEFAULT_
     except Exception as e:
         logging.error(f"Error sending message to doctor {doctor_id}: {e}")
 
+
+
 async def receive_doctor_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """دریافت پیام‌های ارسالی پزشک برای کاربر"""
     doctor_id = update.message.from_user.id
@@ -1143,10 +1233,20 @@ async def receive_doctor_message(update: Update, context: ContextTypes.DEFAULT_T
     for user_id, active_doctor_id in ACTIVE_CONVERSATIONS.items():
         if active_doctor_id == doctor_id:
             try:
-                await context.bot.send_message(
-                    chat_id=user_id,
-                    text=f"پیامی از پزشک:\n\n{doctor_message}"
-                )
+                if doctor_message.lower().strip() in ["اتمام گفتگو", "پایان"]:
+                            await update.message.reply_text("مکالمه پایان یافت", reply_markup=MAIN_KEYBOARD)
+                            await context.bot.send_message(
+                            chat_id=user_id,
+                            text=f"مکالمه توسط پزشک پایان یافت"
+                        )
+                            del ACTIVE_CONVERSATIONS[user_id]
+                            return
+
+                else:  
+                    await context.bot.send_message(
+                        chat_id=user_id,
+                        text=f"پیامی از پزشک:\n\n{doctor_message}"
+                    )
             except Exception as e:
                 logging.error(f"Error sending message to user {user_id}: {e}")
 
