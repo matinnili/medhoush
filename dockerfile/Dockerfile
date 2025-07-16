@@ -3,11 +3,11 @@ FROM python:3.10
 # Set environment variables for pip
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-COPY myname.txt myname.txt
-COPY medhoush_telegram_2.0.0.py medhoush_telegram_2.0.0.py
+COPY ./dockerfile/requirements.txt ./dockerfile/requirements.txt
+# COPY myname.txt myname.txt
+COPY ./dockerfile/medhoush_telegram_2.0.0.py ./dockerfile/medhoush_telegram_2.0.0.py
 RUN apt-get update && apt-get install git -y
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install  -r ./dockerfile/requirements.txt
 COPY . .
 
-CMD python3  medhoush_telegram_2.0.0.py
+CMD python3  ./dockerfile/medhoush_telegram_2.0.0.py

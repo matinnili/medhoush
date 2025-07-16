@@ -31,12 +31,12 @@ logging.basicConfig(
 # ----------------------------
 # کانفیگ API و متغیرها
 # ----------------------------
-TELEGRAM_TOKEN = "8177855938:AAHCnj7tgkpsHdOoZH1hBJKujIjABxh8eRw"
+TELEGRAM_TOKEN = "7784966158:AAEydBAaUlF99f3o9_-oN-84-WUrhjEg_MM"
 LLM_API_KEY = "app-AL4fTkUVtLptvaTgC1v6qrZl"
-BASE_URL = "http://185.216.22.90"
-CHAT_URL = f"{BASE_URL}/v1/chat-messages"
-UPLOAD_URL = f"{BASE_URL}/v1/files/upload"
-AUDIO_TO_TEXT_URL = f"{BASE_URL}/v1/audio-to-text"
+BASE_URL = "https://difysrv.yarai.ir/v1"
+CHAT_URL = f"{BASE_URL}/chat-messages"
+UPLOAD_URL = f"{BASE_URL}/files/upload"
+AUDIO_TO_TEXT_URL = f"{BASE_URL}/audio-to-text"
 
 
 # لینک‌های پرداخت

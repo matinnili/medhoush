@@ -32,8 +32,8 @@ logging.basicConfig(
 # کانفیگ API و متغیرها
 # ----------------------------
 TELEGRAM_TOKEN = "7920544614:AAGHhY-EcDuUGfoSg7fMvFSTy9YUYmFRsQ8"
-LLM_API_KEY = "app-AL4fTkUVtLptvaTgC1v6qrZl"
-BASE_URL = "http://185.216.22.90"
+LLM_API_KEY = "app-mdBV2tEFLQmpyLHn6nyc2zlW"
+BASE_URL = "https://difysrv.yarai.ir/v1"
 CHAT_URL = f"{BASE_URL}/v1/chat-messages"
 UPLOAD_URL = f"{BASE_URL}/v1/files/upload"
 AUDIO_TO_TEXT_URL = f"{BASE_URL}/v1/audio-to-text"
