@@ -100,6 +100,7 @@ def remove_markdown(text: str) -> str:
     return text.replace("*", "").replace("_", "").replace("`", "")
 
 def is_admin(user_id: int) -> bool:
+    print(f"----------------- this is uder_id {user_id}")
     """بررسی اینکه آیا کاربر ادمین است یا خیر"""
     return user_id in ADMIN_IDS
 
@@ -125,12 +126,13 @@ def save_requests(file_path: str, requests):
 async def is_user_member_of_channel(user_id: int, context: ContextTypes.DEFAULT_TYPE) -> bool:
     """بررسی عضویت کاربر در کانال"""
     try:
-        member = await context.bot.get_chat_member(CHANNEL_USERNAME, user_id)
-        return member.status in (
-            ChatMember.MEMBER,
-            ChatMember.ADMINISTRATOR,
-            ChatMember.OWNER,
-        )
+        # member = await context.bot.get_chat_member(CHANNEL_USERNAME, user_id)
+        # return member.status in (
+        #     ChatMember.MEMBER,
+        #     ChatMember.ADMINISTRATOR,
+        #     ChatMember.OWNER,
+        # )
+        return True
     except Exception as e:
         logging.error(f"Error checking channel membership: {e}")
         return False
