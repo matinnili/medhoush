@@ -45,7 +45,7 @@ PAY_LINK_100 = "https://zarinp.al/708601"
 VISIT_PAY_LINK = "https://zarinp.al/713497"
 
 # محدودیت پیام رایگان هفتگی
-FREE_MESSAGES_PER_WEEK = 7
+FREE_MESSAGES_PER_WEEK = 1000
 
 # کانال تلگرام برای الزام عضویت
 CHANNEL_USERNAME = "@medhoush_ir"
@@ -54,7 +54,7 @@ CHANNEL_USERNAME = "@medhoush_ir"
 ADMIN_IDS = [6234375011,105795770]
 
 # آیدی‌های پزشکان
-DOCTOR_IDS = [6234375011,105795770]  # لیست آی‌دی‌های عددی پزشکان
+DOCTOR_IDS = [83900221]  # لیست آی‌دی‌های عددی پزشکان
 
 # مسیر فایل داده‌های پرداخت
 PAYMENT_FILE = "payment_requests.json"
@@ -916,16 +916,16 @@ async def receive_doctor_document(update: Update, context: ContextTypes.DEFAULT_
 
     try:
         with open(document_path, 'rb') as document_file:
-            await context.bot.send_voice(
+            await context.bot.send_document(
                 chat_id=user_id,
-                voice=documnet_file,
+                voice=document_file,
                 caption=f"پیام  جدید از پزشک "
             )
         await update.message.reply_text("پیام صوتی شما به بیمار ارسال شد.", reply_markup=VISIT_KEYBOARD)
     except Exception as e:
         logging.error(f"Error sending audio to doctor {user_id}: {e}")
     finally:
-        os.remove(audio_path)
+        os.remove(document_path)
 async def receive_patient_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """دریافت سند و ارسال به پزشک اگر چت فعال است."""
     doctor_id = update.message.from_user.id
@@ -945,7 +945,7 @@ async def receive_patient_document(update: Update, context: ContextTypes.DEFAULT
 
     try:
         with open(document_path, 'rb') as document_file:
-            await context.bot.send_voice(
+            await context.bot.send_document(
                 chat_id=user_id,
                 voice=documnet_file,
                 caption=f"پیام  جدید از پزشک "
@@ -954,7 +954,7 @@ async def receive_patient_document(update: Update, context: ContextTypes.DEFAULT
     except Exception as e:
         logging.error(f"Error sending audio to doctor {user_id}: {e}")
     finally:
-        os.remove(audio_path)
+        os.remove(document_path)
 
 
 async def handle_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
