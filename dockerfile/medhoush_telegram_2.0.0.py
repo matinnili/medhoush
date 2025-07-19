@@ -707,7 +707,7 @@ async def switch_to_normal_menu(update: Update, context: ContextTypes.DEFAULT_TY
 
 async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """هندل کردن پیام‌های متنی عادی (گفتگو با AI)"""
-    if await receive_receipt_id(update, context):
+    if await d(update, creceive_receipt_iontext):
         return
 
     if await receive_user_id_for_check(update, context):
