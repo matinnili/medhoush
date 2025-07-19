@@ -32,7 +32,7 @@ logging.basicConfig(
 # کانفیگ API و متغیرها
 # ----------------------------
 TELEGRAM_TOKEN = "7784966158:AAEydBAaUlF99f3o9_-oN-84-WUrhjEg_MM"
-LLM_API_KEY = "app-AL4fTkUVtLptvaTgC1v6qrZl"
+LLM_API_KEY = "app-mdBV2tEFLQmpyLHn6nyc2zlW"
 BASE_URL = "https://difysrv.yarai.ir/v1"
 CHAT_URL = f"{BASE_URL}/chat-messages"
 UPLOAD_URL = f"{BASE_URL}/files/upload"
@@ -54,7 +54,7 @@ CHANNEL_USERNAME = "@medhoush_ir"
 ADMIN_IDS = [6234375011,105795770]
 
 # آیدی‌های پزشکان
-DOCTOR_IDS = [83900221]  # لیست آی‌دی‌های عددی پزشکان
+DOCTOR_IDS = [6234375011,83900221]  # لیست آی‌دی‌های عددی پزشکان
 
 # مسیر فایل داده‌های پرداخت
 PAYMENT_FILE = "payment_requests.json"
@@ -918,7 +918,7 @@ async def receive_doctor_document(update: Update, context: ContextTypes.DEFAULT_
         with open(document_path, 'rb') as document_file:
             await context.bot.send_document(
                 chat_id=user_id,
-                voice=document_file,
+                document=document_file,
                 caption=f"پیام  جدید از پزشک "
             )
         await update.message.reply_text("پیام صوتی شما به بیمار ارسال شد.", reply_markup=VISIT_KEYBOARD)
@@ -928,7 +928,7 @@ async def receive_doctor_document(update: Update, context: ContextTypes.DEFAULT_
         os.remove(document_path)
 async def receive_patient_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """دریافت سند و ارسال به پزشک اگر چت فعال است."""
-    doctor_id = update.message.from_user.id
+    
 
     user_id = update.message.from_user.id
     if user_id not in ACTIVE_CONVERSATIONS:
@@ -942,15 +942,16 @@ async def receive_patient_document(update: Update, context: ContextTypes.DEFAULT
     doc = await update.message.document.get_file()
     ext = os.path.splitext(update.message.document.file_name)[1]
     document_path = f"doc_{user_id}{ext}"
+    await doc.download_to_drive(document_path)
 
     try:
         with open(document_path, 'rb') as document_file:
             await context.bot.send_document(
-                chat_id=user_id,
-                voice=documnet_file,
-                caption=f"پیام  جدید از پزشک "
+                chat_id=doctor_id,
+                document=document_file,
+                caption=f"پیام  جدید از بیمار "
             )
-        await update.message.reply_text("پیام صوتی شما به بیمار ارسال شد.", reply_markup=VISIT_KEYBOARD)
+        await update.message.reply_text("پیام صوتی شما به پزشک ارسال شد.", reply_markup=VISIT_KEYBOARD)
     except Exception as e:
         logging.error(f"Error sending audio to doctor {user_id}: {e}")
     finally:
