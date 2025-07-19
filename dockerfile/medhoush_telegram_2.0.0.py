@@ -25,8 +25,7 @@ from telegram.ext import (
 # تنظیمات اولیه و لاگینگ
 # ----------------------------
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
+    filename="app.log",level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s",filemode='a')
 
 # ----------------------------
 # کانفیگ API و متغیرها
@@ -51,10 +50,10 @@ FREE_MESSAGES_PER_WEEK = 1000
 CHANNEL_USERNAME = "@medhoush_ir"
 
 # آیدی‌های ادمین
-ADMIN_IDS = [6234375011,105795770]
+ADMIN_IDS = [105795770]
 
 # آیدی‌های پزشکان
-DOCTOR_IDS = [6234375011,83900221]  # لیست آی‌دی‌های عددی پزشکان
+DOCTOR_IDS = [6234375011]  # لیست آی‌دی‌های عددی پزشکان
 
 # مسیر فایل داده‌های پرداخت
 PAYMENT_FILE = "payment_requests.json"
@@ -100,7 +99,7 @@ def remove_markdown(text: str) -> str:
     return text.replace("*", "").replace("_", "").replace("`", "")
 
 def is_admin(user_id: int) -> bool:
-    print(f"----------------- this is uder_id {user_id}")
+    logging.info(f"----------------- this is user_id {user_id}")
     """بررسی اینکه آیا کاربر ادمین است یا خیر"""
     return user_id in ADMIN_IDS
 
